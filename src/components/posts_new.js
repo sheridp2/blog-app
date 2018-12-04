@@ -3,24 +3,34 @@ import { Field, reduxForm } from 'redux-form';
 
 
 class PostNew extends Component {
-
   renderField(field){
+    const { meta: { touched, error } } = field;
+    const className= `form-group ${touched && error ? 'has-danger' : ''}`
+
     return (
-      <div className="form-group">
-      <label>{field.label}</label>
+      <div className={className}>
+        <label>{field.label}</label>
         <input
           className="form-control"
           type="text"
           {...field.input}
         />
-        {field.meta.error}
+        <div className="text-help">
+          {touched ? error : ''}
+        </div>
       </div>
     )
   }
 
+  onSubmit(values){
+  
+  }
+
   render(){
+    const {handleSubmit} = this.props;
+
     return(
-      <form>
+      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
           label="Title"
           name="title"
@@ -37,6 +47,7 @@ class PostNew extends Component {
           name="content"
           component={this.renderField}
         />
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     )
   }
@@ -44,8 +55,8 @@ class PostNew extends Component {
 
 function validate(values){
   const errors = {};
-  if(!values.title || values.title.length < 3){
-    errors.title="Enter a title this is at least 3 charaters long!";
+  if(!values.title){
+    errors.title="Enter a title";
   }
 
   if(!values.categories ){
