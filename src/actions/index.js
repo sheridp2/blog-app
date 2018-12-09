@@ -7,7 +7,7 @@ export const CREATE_POST = 'create_post'
 export const DELETE_POST = 'delete_post'
 
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api'
-const RANDOM_STRING = '?key=PATSKEY123'
+const RANDOM_STRING = ''
 
 export function fetchPosts(){
   const request = axios.get(`${ROOT_URL}/posts${RANDOM_STRING}`);
